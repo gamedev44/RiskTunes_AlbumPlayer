@@ -1124,11 +1124,23 @@
             updateNowPlaying();
             updatePlaylistHighlight();
             
-            // Simple audio play - just like the example
+            // Load and play the track
             audioPlayer.src = track;
-            audioPlayer.play();
             
-            updatePlayPauseButton();
+            // Use play() with promise handling for better reliability
+            const playPromise = audioPlayer.play();
+            
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => {
+                        console.log('Track started playing successfully');
+                        updatePlayPauseButton();
+                    })
+                    .catch(error => {
+                        console.error('Error playing track:', error);
+                        updatePlayPauseButton();
+                    });
+            }
         }
         
         // Toggle play/pause
@@ -1177,15 +1189,23 @@
         // Next track
         function nextTrack() {
             currentTrackIndex++;
+            console.log('Next track called. Current index:', currentTrackIndex, 'Total tracks:', tracks.length);
+            
             if (currentTrackIndex >= tracks.length) {
-                if (isLoopOn) {
+                console.log('Reached end of playlist. Loop:', isLoopOn, 'Autoplay:', isAutoplayOn);
+                
+                // If loop is on OR autoplay is on, restart from beginning
+                if (isLoopOn || isAutoplayOn) {
+                    console.log('Looping back to first track');
                     currentTrackIndex = 0;
                     playTrack(currentTrackIndex);
                 } else {
+                    console.log('Stopping at end of playlist');
                     currentTrackIndex = tracks.length - 1;
                     audioPlayer.pause();
                 }
             } else {
+                console.log('Playing track index:', currentTrackIndex);
                 playTrack(currentTrackIndex);
             }
         }
@@ -1256,19 +1276,29 @@
         });
 
         audioPlayer.addEventListener('ended', () => {
-            console.log('Audio ended');
-            bgContainer.classList.remove('playing');
-            updatePlayPauseButton();
+            console.log('🎵 Audio ended - Autoplay:', isAutoplayOn, 'Loop:', isLoopOn, 'Current track:', currentTrackIndex + 1, '/', tracks.length);
             
             // Auto-play next track if autoplay is enabled
             if (isAutoplayOn) {
-                nextTrack();
+                console.log('✅ Autoplay is ON, moving to next track in 100ms...');
+                // Small delay for smoother transition
+                setTimeout(() => {
+                    nextTrack();
+                }, 100);
+            } else {
+                console.log('❌ Autoplay is OFF, stopping playback');
+                bgContainer.classList.remove('playing');
+                updatePlayPauseButton();
             }
         });
 
         audioPlayer.addEventListener('error', (e) => {
             console.error('Audio error:', audioPlayer.error);
             bgContainer.classList.remove('playing');
+        });
+
+        audioPlayer.addEventListener('loadeddata', () => {
+            console.log('✅ Audio loaded and ready to play');
         });
 
         // Play first track (when clicking album art)
