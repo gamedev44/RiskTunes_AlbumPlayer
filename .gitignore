@@ -1,0 +1,8 @@
+# DO NOT PUSH THESE FILES - THEY CONTAIN YOUR UNLOCK CODES
+unlock.js
+generate-codes.html
+
+# Keep these private - never commit to repo
+**/unlock.js
+**/generate-codes.html
+
