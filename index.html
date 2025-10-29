@@ -1106,19 +1106,34 @@
                 item.className = 'playlist-item';
                 item.innerHTML = `
                     <span class="playlist-item-number">${String(index + 1).padStart(2, '0')}</span>
-                    <span class="playlist-item-name">${track.replace('.mp3', '')}</span>
+                    <span class="playlist-item-name">${track.replace('music/', '').replace('.mp3', '')}</span>
                 `;
-                item.onclick = () => playTrack(index);
+                item.onclick = () => playTrackDirect(index);
                 playlistElement.appendChild(item);
             });
+        }
+        
+        // Play track directly by its actual index (for playlist clicks)
+        function playTrackDirect(actualTrackIndex) {
+            console.log('Playing track directly:', actualTrackIndex);
+            // Find where this track is in the play order
+            currentTrackIndex = playOrder.indexOf(actualTrackIndex);
+            if (currentTrackIndex === -1) currentTrackIndex = actualTrackIndex;
+            playTrack(currentTrackIndex);
         }
 
         // Load and play track
         function playTrack(index) {
             currentTrackIndex = index;
-            const track = tracks[playOrder[currentTrackIndex]];
+            const actualTrackIndex = playOrder[currentTrackIndex];
+            const track = tracks[actualTrackIndex];
             
-            console.log('Playing track:', track);
+            console.log('🎵 playTrack() called - Index:', currentTrackIndex, 'Actual Track:', actualTrackIndex, 'File:', track);
+            
+            if (!track) {
+                console.error('❌ No track found at index:', currentTrackIndex);
+                return;
+            }
             
             // Update display
             updateNowPlaying();
@@ -1126,6 +1141,7 @@
             
             // Load and play the track
             audioPlayer.src = track;
+            audioPlayer.load(); // Force reload
             
             // Use play() with promise handling for better reliability
             const playPromise = audioPlayer.play();
@@ -1133,13 +1149,15 @@
             if (playPromise !== undefined) {
                 playPromise
                     .then(() => {
-                        console.log('Track started playing successfully');
+                        console.log('✅ Track started playing successfully');
                         updatePlayPauseButton();
                     })
                     .catch(error => {
-                        console.error('Error playing track:', error);
+                        console.error('❌ Error playing track:', error);
                         updatePlayPauseButton();
                     });
+            } else {
+                updatePlayPauseButton();
             }
         }
         
@@ -1280,11 +1298,8 @@
             
             // Auto-play next track if autoplay is enabled
             if (isAutoplayOn) {
-                console.log('✅ Autoplay is ON, moving to next track in 100ms...');
-                // Small delay for smoother transition
-                setTimeout(() => {
-                    nextTrack();
-                }, 100);
+                console.log('✅ Autoplay is ON, advancing to next track...');
+                nextTrack();
             } else {
                 console.log('❌ Autoplay is OFF, stopping playback');
                 bgContainer.classList.remove('playing');
