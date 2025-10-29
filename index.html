@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symptoms Of My Sickness - Risk | Metalic Hard Rock Screamo Album</title>
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Symptoms Of My Sickness - Risk">
+    <meta name="description" content="Experience 'Symptoms Of My Sickness' by Risk - A raw, intense journey through 12 tracks of metalic hard rock screamo. Illness Unleashed. 🎸⚡">
+    <meta name="keywords" content="Risk, Symptoms Of My Sickness, metalic hard rock, screamo, metal album, heavy metal, rock music, digital dystopia, cyber punk metal">
+    <meta name="author" content="Risk">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="music.album">
+    <meta property="og:url" content="https://yourdomain.com/">
+    <meta property="og:title" content="Symptoms Of My Sickness - Risk">
+    <meta property="og:description" content="Experience 'Symptoms Of My Sickness' by Risk - A raw, intense journey through 12 tracks of metalic hard rock screamo. Illness Unleashed. 🎸⚡">
+    <meta property="og:image" content="https://yourdomain.com/assets/album-cover.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="1200">
+    <meta property="og:site_name" content="Risk Music">
+    <meta property="music:musician" content="Risk">
+    <meta property="music:release_date" content="2025">
+    <meta property="music:song_count" content="12">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourdomain.com/">
+    <meta property="twitter:title" content="Symptoms Of My Sickness - Risk">
+    <meta property="twitter:description" content="Experience 'Symptoms Of My Sickness' by Risk - A raw, intense journey through 12 tracks of metalic hard rock screamo. Illness Unleashed. 🎸⚡">
+    <meta property="twitter:image" content="https://yourdomain.com/assets/album-cover.png">
+    <meta name="twitter:creator" content="@YourTwitterHandle">
+    
+    <!-- Discord Embed -->
+    <meta name="theme-color" content="#3b82f6">
+    <meta property="og:video" content="">
+    
+    <!-- Additional Meta -->
+    <link rel="canonical" href="https://yourdomain.com/">
+    <link rel="icon" type="image/png" href="assets/album-cover.png">
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="assets/album-cover.png">
+    
+    <!-- Content Warnings for Embeds -->
+    <meta property="og:restrictions:age" content="18+">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e1a;
+            color: #e0e6ed;
+            overflow: hidden;
+            min-height: 100vh;
+        }
+
+        #bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+        }
+
+        #bg-container.playing {
+            opacity: 1;
+        }
+
+        #bg-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(40px) brightness(0.25);
+            transform: scale(1.2);
+        }
+        
+        #bg-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(60px);
+            pointer-events: none;
+        }
+
+        #visualizer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+            padding-top: 40px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        
+        .content-wrapper::-webkit-scrollbar {
+            width: 0;
+            display: none;
+        }
+
+        #album-art-container {
+            position: relative;
+            margin-bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            width: min(95vw, 950px);
+            flex-shrink: 0;
+        }
+
+        #album-art {
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        #album-art:hover {
+            transform: scale(1.02);
+        }
+
+        #album-art-img {
+            width: 100%;
+            height: auto;
+            max-width: min(90vw, 900px);
+            max-height: min(90vw, 900px);
+            object-fit: contain;
+            position: relative;
+            z-index: 3;
+            display: block;
+        }
+
+        .info-panel {
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 20px;
+            padding: 15px 25px;
+            max-width: min(60vw, 500px);
+            width: 100%;
+            margin: -130px auto 20px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            z-index: 4;
+            flex-shrink: 0;
+        }
+
+        .artist-name {
+            color: #3b82f6;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 3px;
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+
+        .album-name {
+            color: #e0e6ed;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .current-track {
+            color: #94a3b8;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+
+        .track-number {
+            color: #64748b;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        audio {
+            width: 100%;
+            margin-bottom: 10px;
+            outline: none;
+            border-radius: 8px;
+        }
+
+        audio::-webkit-media-controls-panel {
+            background-color: rgba(15, 23, 42, 0.6);
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        button {
+            flex: 1;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .toggle-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 8px;
+            background: rgba(30, 41, 59, 0.5);
+            color: #94a3b8;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .toggle-btn:hover {
+            background: rgba(30, 41, 59, 0.8);
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: #fff;
+            border-color: #3b82f6;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .playlist-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: rgba(30, 41, 59, 0.4);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            margin-top: 5px;
+        }
+
+        .playlist-header:hover {
+            background: rgba(30, 41, 59, 0.6);
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+
+        .playlist-header h3 {
+            color: #3b82f6;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .playlist-toggle {
+            color: #3b82f6;
+            font-size: 18px;
+            transition: transform 0.3s;
+        }
+
+        .playlist-toggle.open {
+            transform: rotate(180deg);
+        }
+
+        .playlist {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            margin-top: 10px;
+        }
+
+        .playlist.open {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .playlist-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background: rgba(30, 41, 59, 0.3);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+
+        .playlist-item:hover {
+            background: rgba(30, 41, 59, 0.6);
+            border-left-color: #3b82f6;
+            transform: translateX(5px);
+        }
+
+        .playlist-item.active {
+            background: rgba(59, 130, 246, 0.15);
+            border-left-color: #3b82f6;
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .playlist-item-number {
+            color: #3b82f6;
+            font-weight: 700;
+            margin-right: 12px;
+            font-size: 13px;
+        }
+
+        .playlist-item-name {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        .playlist::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .playlist::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.3);
+            border-radius: 4px;
+        }
+
+        .playlist::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 4px;
+        }
+
+        .playlist::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+        }
+
+        /* Mobile & Touch Responsive Styles */
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+
+            .content-wrapper {
+                padding: 5px;
+                padding-top: 10px;
+                justify-content: flex-start;
+            }
+
+            #album-art-container {
+                width: 100%;
+                padding: 5px;
+                margin-bottom: 0;
+            }
+
+            #album-art {
+                max-width: 85vw;
+                max-height: 45vh;
+                width: auto;
+                height: auto;
+            }
+
+            #album-art-img {
+                max-width: 85vw;
+                max-height: 45vh;
+            }
+
+            .info-panel {
+                max-width: 90vw;
+                padding: 10px 15px;
+                margin: -80px auto 10px;
+            }
+
+            .artist-name {
+                font-size: 9px;
+                margin-bottom: 2px;
+            }
+
+            .album-name {
+                font-size: 14px;
+                margin-bottom: 5px;
+            }
+
+            .current-track {
+                font-size: 11px;
+                margin-bottom: 2px;
+            }
+
+            .track-number {
+                font-size: 10px;
+                margin-bottom: 6px;
+            }
+
+            audio {
+                margin-bottom: 6px;
+                height: 40px;
+            }
+
+            .controls {
+                flex-direction: row;
+                gap: 6px;
+                margin-bottom: 6px;
+            }
+
+            button {
+                width: 100%;
+                padding: 8px 10px;
+                font-size: 11px;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .toggle-buttons {
+                flex-direction: row;
+                gap: 6px;
+                margin-bottom: 6px;
+            }
+
+            .toggle-btn {
+                padding: 6px 8px;
+                font-size: 10px;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .playlist-header {
+                padding: 8px 10px;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .playlist-header h3 {
+                font-size: 11px;
+            }
+
+            .playlist.open {
+                max-height: 25vh;
+            }
+
+            .playlist-item {
+                padding: 10px 12px;
+                margin-bottom: 6px;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .playlist-item:active {
+                background: rgba(59, 130, 246, 0.25);
+                transform: translateX(2px);
+            }
+
+            .playlist-item-number {
+                font-size: 12px;
+                margin-right: 10px;
+            }
+
+            .playlist-item-name {
+                font-size: 12px;
+            }
+
+            /* Warning overlay mobile */
+            .warning-content {
+                padding: 30px 25px;
+                max-width: 90vw;
+            }
+
+            .warning-icon {
+                font-size: 48px;
+            }
+
+            .warning-title {
+                font-size: 24px;
+                margin-bottom: 15px;
+            }
+
+            .warning-text {
+                font-size: 14px;
+                line-height: 1.6;
+                margin-bottom: 20px;
+            }
+
+            .warning-button {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-wrapper {
+                padding: 3px;
+                padding-top: 5px;
+            }
+
+            #album-art-container {
+                padding: 3px;
+            }
+
+            #album-art {
+                max-width: 80vw;
+                max-height: 40vh;
+            }
+
+            .info-panel {
+                max-width: 92vw;
+                padding: 8px 12px;
+                margin: -60px auto 8px;
+            }
+
+            .artist-name {
+                font-size: 8px;
+            }
+
+            .album-name {
+                font-size: 12px;
+                margin-bottom: 4px;
+            }
+
+            .current-track {
+                font-size: 10px;
+            }
+
+            .track-number {
+                font-size: 9px;
+                margin-bottom: 5px;
+            }
+
+            audio {
+                height: 35px;
+                margin-bottom: 5px;
+            }
+
+            button {
+                padding: 6px 8px;
+                font-size: 10px;
+            }
+
+            .toggle-btn {
+                padding: 5px 6px;
+                font-size: 9px;
+            }
+
+            .playlist.open {
+                max-height: 22vh;
+            }
+
+            #warning-overlay {
+                padding: 5px;
+            }
+
+            .warning-content {
+                padding: 12px 10px;
+                max-height: 97vh;
+                width: 98%;
+            }
+
+            .warning-icon {
+                font-size: 32px;
+                margin-bottom: 6px;
+            }
+
+            .warning-title {
+                font-size: 16px;
+                margin-bottom: 6px;
+                letter-spacing: 1px;
+            }
+
+            .warning-text {
+                font-size: 10px;
+                line-height: 1.35;
+                margin-bottom: 8px;
+            }
+
+            .warning-button {
+                padding: 8px 16px;
+                font-size: 12px;
+                width: 90%;
+                max-width: 200px;
+            }
+
+            .warning-title {
+                font-size: 20px;
+            }
+
+            .warning-text {
+                font-size: 12px;
+            }
+        }
+
+        /* Touch-specific enhancements */
+        @media (hover: none) and (pointer: coarse) {
+            button:hover {
+                transform: none;
+            }
+
+            button:active {
+                transform: scale(0.98);
+            }
+
+            .toggle-btn:hover {
+                background: rgba(30, 41, 59, 0.5);
+                border-color: rgba(59, 130, 246, 0.2);
+            }
+
+            .toggle-btn:active {
+                background: rgba(30, 41, 59, 0.8);
+                transform: scale(0.98);
+            }
+
+            .playlist-item:hover {
+                background: rgba(30, 41, 59, 0.3);
+                border-left-color: transparent;
+                transform: none;
+            }
+
+            #album-art:hover {
+                transform: none;
+            }
+
+            #album-art:active {
+                transform: scale(0.98);
+            }
+        }
+
+        /* Landscape mobile orientation */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .content-wrapper {
+                justify-content: flex-start;
+                padding-top: 10px;
+            }
+
+            #album-art-img {
+                max-width: 50vh;
+                max-height: 50vh;
+            }
+
+            .info-panel {
+                margin: -60px auto 10px;
+            }
+
+            .playlist.open {
+                max-height: 30vh;
+            }
+        }
+
+        /* Epilepsy Warning Overlay */
+        #warning-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            padding: 10px;
+        }
+
+        #warning-overlay.hidden {
+            display: none;
+        }
+
+        .warning-content {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 3px solid #ef4444;
+            border-radius: 20px;
+            padding: 20px 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 95vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(239, 68, 68, 0.4);
+            overflow: hidden;
+        }
+
+        .warning-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+            animation: pulse-warning 2s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulse-warning {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        .warning-title {
+            color: #ef4444;
+            font-size: 28px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+            flex-shrink: 0;
+        }
+
+        .warning-text {
+            color: #e0e6ed;
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            flex-shrink: 1;
+            overflow-y: auto;
+        }
+
+        .warning-text::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .warning-text::-webkit-scrollbar-track {
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 10px;
+        }
+
+        .warning-text::-webkit-scrollbar-thumb {
+            background: rgba(239, 68, 68, 0.5);
+            border-radius: 10px;
+        }
+
+        .warning-button {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            flex-shrink: 0;
+        }
+
+        .warning-button:hover {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.6);
+        }
+
+        .warning-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <!-- Epilepsy Warning Overlay -->
+    <div id="warning-overlay">
+        <div class="warning-content">
+            <div class="warning-icon">⚠️</div>
+            <h1 class="warning-title">Content Warning</h1>
+            <p class="warning-text">
+                <strong>This experience contains:</strong>
+                <br><br>
+                🔴 Flashing lights, strobing effects, and rapid visual changes
+                <br>
+                🔴 Explicit language and mature themes
+                <br>
+                🔴 Topics of violence and intense emotional content
+                <br>
+                🔴 Topics of self-harm and mental health struggles
+                <br><br>
+                <strong>⚠️ PARENTAL GUIDANCE IS HIGHLY ADVISED ⚠️</strong>
+                <br>
+                <strong>VIEWER DISCRETION IS STRONGLY ADVISED</strong>
+                <br><br>
+                If you or anyone in your vicinity has a history of epilepsy or photosensitive seizures, 
+                please exercise caution or refrain from viewing.
+                <br><br>
+                <strong style="color: #ef4444;">🆘 CRISIS SUPPORT 🆘</strong>
+                <br>
+                If you or anyone you know is thinking of hurting themselves, 
+                <br>
+                please call the <strong>Suicide Prevention Hotline at 988</strong>
+                <br>
+                Help is available 24/7. You are not alone.
+                <br><br>
+                By continuing, you acknowledge these warnings and proceed at your own risk.
+            </p>
+            <button class="warning-button" onclick="dismissWarning()">I Understand - Continue</button>
+        </div>
+    </div>
+    <div id="bg-container">
+        <img id="bg-image" src="assets/bg.webp" alt="Background">
+    </div>
+
+    <canvas id="visualizer"></canvas>
+
+    <div class="content-wrapper">
+        <div id="album-art-container">
+            <img id="album-art" src="assets/album-cover.png" alt="Symptoms Of My Sickness" onclick="playFirstTrack()">
+        </div>
+            
+        <div class="info-panel">
+                <div class="artist-name">Risk</div>
+                <div class="album-name">Symptoms Of My Sickness</div>
+                <div class="current-track" id="currentTrack">Select a track to begin</div>
+                <div class="track-number" id="trackNumber">-</div>
+
+                <audio id="audioPlayer" controls>
+                    Your browser does not support the audio element.
+                </audio>
+
+                <div class="controls">
+                    <button onclick="previousTrack()">⏮ Previous</button>
+                    <button onclick="nextTrack()">Next ⏭</button>
+                </div>
+
+                <div class="toggle-buttons">
+                    <button class="toggle-btn" id="shuffleBtn" onclick="toggleShuffle()">
+                        🔀 Shuffle
+                    </button>
+                    <button class="toggle-btn active" id="autoplayBtn" onclick="toggleAutoplay()">
+                        ▶️ Autoplay
+                    </button>
+                    <button class="toggle-btn" id="loopBtn" onclick="toggleLoop()">
+                        🔁 Loop
+                    </button>
+                </div>
+
+                <div class="playlist-header" onclick="togglePlaylist()">
+                    <h3>Tracklist (12 Songs)</h3>
+                    <span class="playlist-toggle" id="playlistToggle">▼</span>
+                </div>
+
+                <div class="playlist" id="playlist"></div>
+        </div>
+    </div>
+
+    <script>
+        // Album tracks in order
+        const tracks = [
+            "music/Consumption of Silence.mp3",
+            "music/The Architect's Lie.mp3",
+            "music/Viral Parasite.mp3",
+            "music/Ghost Protocol.mp3",
+            "music/Neon Anesthesia.mp3",
+            "music/Risky Business (Apology Tribute to Snowball).mp3",
+            "music/Surveillance State.mp3",
+            "music/Memory Corruption.mp3",
+            "music/Neural Hijack.mp3",
+            "music/Synthetic Love.mp3",
+            "music/Digital Afterlife.mp3",
+            "music/System Reboot.mp3"
+        ];
+
+        let currentTrackIndex = 0;
+        let isShuffleOn = false;
+        let isAutoplayOn = true; // Autoplay enabled by default
+        let isLoopOn = false;
+        let playOrder = [...Array(tracks.length).keys()];
+
+        const audioPlayer = document.getElementById('audioPlayer');
+        const currentTrackElement = document.getElementById('currentTrack');
+        const trackNumberElement = document.getElementById('trackNumber');
+        const playlistElement = document.getElementById('playlist');
+        const bgContainer = document.getElementById('bg-container');
+        const canvas = document.getElementById('visualizer');
+        const ctx = canvas.getContext('2d');
+
+        // Audio Context for visualization
+        let audioContext, analyser, dataArray;
+        let particles = [];
+
+        // Particle class
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                // Start from center (behind album art)
+                this.x = canvas.width / 2;
+                this.y = canvas.height / 2;
+                
+                // Random angle for outward motion
+                const angle = Math.random() * Math.PI * 2;
+                const speed = 0.8 + Math.random() * 2;
+                this.speedX = Math.cos(angle) * speed;
+                this.speedY = Math.sin(angle) * speed;
+                
+                this.size = 1;
+                this.maxSize = 2 + Math.random() * 4;
+                this.opacity = 0;
+                this.life = 0;
+                this.maxLife = 180 + Math.random() * 120; // Longer life = travel further
+                
+                // Distance from center for radial blur
+                this.distanceFromCenter = 0;
+            }
+
+            update(audioLevel, isPlaying) {
+                if (!isPlaying) return;
+                
+                this.life++;
+                
+                // Detect beat/pulse (sudden increase in audio level) - 2x more reactive
+                const beatThreshold = 0.5; // Lower threshold = more sensitive
+                const isBeat = audioLevel > beatThreshold;
+                
+                // Move outward with dramatic audio-reactive speed - FASTER on reactions
+                // On beats, multiply speed MUCH more significantly
+                const baseSpeed = 1 + audioLevel * 10; // 2x base reactivity (was 5)
+                const beatBoost = isBeat ? 5 : 1; // Much more dramatic push on beats (was 2.5)
+                const speedMultiplier = baseSpeed * beatBoost;
+                
+                this.x += this.speedX * speedMultiplier;
+                this.y += this.speedY * speedMultiplier;
+                
+                // Calculate distance from center for radial blur
+                const dx = this.x - canvas.width / 2;
+                const dy = this.y - canvas.height / 2;
+                this.distanceFromCenter = Math.sqrt(dx * dx + dy * dy);
+                
+                // Check if out of view - kill particle immediately
+                const viewBoundary = Math.max(canvas.width, canvas.height) * 0.6;
+                if (this.distanceFromCenter > viewBoundary) {
+                    this.reset();
+                    return;
+                }
+                
+                // Fade in from center, then fade out with radial falloff
+                const maxDistance = Math.max(canvas.width, canvas.height) * 1.2;
+                const distanceFactor = Math.max(0, 1 - this.distanceFromCenter / maxDistance);
+                
+                if (this.life < 40) {
+                    // Fade in slower/longer
+                    this.opacity = (this.life / 40) * 0.8 * distanceFactor;
+                    this.size = (this.life / 40) * this.maxSize;
+                } else if (this.life > this.maxLife - 60) {
+                    // Fade out slower
+                    this.opacity = ((this.maxLife - this.life) / 60) * 0.8 * distanceFactor;
+                } else {
+                    this.opacity = 0.8 * distanceFactor;
+                    this.size = this.maxSize;
+                }
+                
+                // Boost size based on audio, MUCH bigger on beats
+                this.size += audioLevel * (isBeat ? 12 : 6); // 2x size reaction
+                
+                // Apply radial blur effect
+                const blurAmount = Math.min(8, this.distanceFromCenter / 40);
+                this.blur = blurAmount;
+                
+                // Reset if dead
+                if (this.life >= this.maxLife) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                if (this.opacity <= 0) return;
+                
+                ctx.save();
+                // Reduce blur for better performance
+                if (this.blur > 0) {
+                    ctx.filter = `blur(${Math.min(this.blur, 8)}px)`;
+                }
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                
+                // Greyish-white dust color with transparency
+                const grey = 220 + Math.random() * 35;
+                ctx.fillStyle = `rgba(${grey}, ${grey}, ${grey}, ${this.opacity})`;
+                // Reduce shadow blur for performance
+                ctx.shadowBlur = 4;
+                ctx.shadowColor = `rgba(${grey}, ${grey}, ${grey}, ${this.opacity * 0.3})`;
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        // Initialize canvas
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Initialize particles (reduced count for better performance)
+        for (let i = 0; i < 50; i++) {
+            particles.push(new Particle());
+        }
+
+        // DON'T setup audio context - it routes audio and can cause issues
+        // Audio will play normally through default output
+        // Particles will animate based on simple random patterns instead
+
+        // Animation loop - simulate audio reactivity without audio context
+        let simulatedBeat = 0;
+        
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const isPlaying = !audioPlayer.paused && !audioPlayer.ended;
+            
+            // Update background visibility
+            if (isPlaying) {
+                bgContainer.classList.add('playing');
+            } else {
+                bgContainer.classList.remove('playing');
+            }
+            
+            // Simulate audio level with rhythmic pattern (since we can't use audio context)
+            // More intense and varied for screamo music
+            let audioLevel = 0;
+            if (isPlaying) {
+                simulatedBeat += 0.2; // Faster tempo
+                // Create pulsing effect that simulates music beats with more variation
+                audioLevel = (Math.sin(simulatedBeat) * 0.4 + 0.5) * (Math.random() * 0.4 + 0.6);
+                // More frequent "beat" spikes for screamo intensity
+                if (Math.random() > 0.9) {
+                    audioLevel = 0.95;
+                }
+            }
+            
+            // Update and draw particles only when playing
+            particles.forEach(particle => {
+                particle.update(audioLevel, isPlaying);
+                particle.draw();
+            });
+            
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Toggle playlist
+        function togglePlaylist() {
+            const playlist = document.getElementById('playlist');
+            const toggle = document.getElementById('playlistToggle');
+            playlist.classList.toggle('open');
+            toggle.classList.toggle('open');
+        }
+
+        // Initialize playlist display
+        function initPlaylist() {
+            playlistElement.innerHTML = '';
+            tracks.forEach((track, index) => {
+                const item = document.createElement('div');
+                item.className = 'playlist-item';
+                item.innerHTML = `
+                    <span class="playlist-item-number">${String(index + 1).padStart(2, '0')}</span>
+                    <span class="playlist-item-name">${track.replace('.mp3', '')}</span>
+                `;
+                item.onclick = () => playTrack(index);
+                playlistElement.appendChild(item);
+            });
+        }
+
+        // Load and play track
+        function playTrack(index) {
+            currentTrackIndex = index;
+            const track = tracks[playOrder[currentTrackIndex]];
+            
+            console.log('Playing track:', track);
+            
+            // Update display
+            updateNowPlaying();
+            updatePlaylistHighlight();
+            
+            // Simple audio play - just like the example
+            audioPlayer.src = track;
+            audioPlayer.play();
+            
+            updatePlayPauseButton();
+        }
+        
+        // Toggle play/pause
+        function togglePlayPause() {
+            if (audioPlayer.paused) {
+                if (!audioPlayer.src) {
+                    playTrack(0);
+                } else {
+                    audioPlayer.play();
+                }
+            } else {
+                audioPlayer.pause();
+            }
+            updatePlayPauseButton();
+        }
+        
+        // Update play/pause button text
+        function updatePlayPauseButton() {
+            const btn = document.getElementById('playPauseBtn');
+            if (audioPlayer.paused) {
+                btn.textContent = '▶ Play';
+            } else {
+                btn.textContent = '⏸ Pause';
+            }
+        }
+
+        // Update now playing display
+        function updateNowPlaying() {
+            const actualIndex = playOrder[currentTrackIndex];
+            const trackName = tracks[actualIndex].replace('.mp3', '');
+            currentTrackElement.textContent = trackName;
+            trackNumberElement.textContent = `Track ${actualIndex + 1} of ${tracks.length}`;
+        }
+
+        // Update playlist highlight
+        function updatePlaylistHighlight() {
+            const items = document.querySelectorAll('.playlist-item');
+            items.forEach((item, index) => {
+                item.classList.remove('active');
+                if (index === playOrder[currentTrackIndex]) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        // Next track
+        function nextTrack() {
+            currentTrackIndex++;
+            if (currentTrackIndex >= tracks.length) {
+                if (isLoopOn) {
+                    currentTrackIndex = 0;
+                    playTrack(currentTrackIndex);
+                } else {
+                    currentTrackIndex = tracks.length - 1;
+                    audioPlayer.pause();
+                }
+            } else {
+                playTrack(currentTrackIndex);
+            }
+        }
+
+        // Previous track
+        function previousTrack() {
+            currentTrackIndex--;
+            if (currentTrackIndex < 0) {
+                currentTrackIndex = 0;
+            }
+            playTrack(currentTrackIndex);
+        }
+
+        // Toggle shuffle
+        function toggleShuffle() {
+            isShuffleOn = !isShuffleOn;
+            const shuffleBtn = document.getElementById('shuffleBtn');
+            
+            if (isShuffleOn) {
+                shuffleBtn.classList.add('active');
+                playOrder = [...Array(tracks.length).keys()];
+                for (let i = playOrder.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [playOrder[i], playOrder[j]] = [playOrder[j], playOrder[i]];
+                }
+                currentTrackIndex = 0;
+            } else {
+                shuffleBtn.classList.remove('active');
+                playOrder = [...Array(tracks.length).keys()];
+            }
+        }
+
+        // Toggle autoplay
+        function toggleAutoplay() {
+            isAutoplayOn = !isAutoplayOn;
+            const autoplayBtn = document.getElementById('autoplayBtn');
+            
+            if (isAutoplayOn) {
+                autoplayBtn.classList.add('active');
+            } else {
+                autoplayBtn.classList.remove('active');
+            }
+        }
+
+        // Toggle loop
+        function toggleLoop() {
+            isLoopOn = !isLoopOn;
+            const loopBtn = document.getElementById('loopBtn');
+            
+            if (isLoopOn) {
+                loopBtn.classList.add('active');
+            } else {
+                loopBtn.classList.remove('active');
+            }
+        }
+
+        // Audio event listeners
+        audioPlayer.addEventListener('play', () => {
+            console.log('Audio playing');
+            bgContainer.classList.add('playing');
+            updatePlayPauseButton();
+        });
+
+        audioPlayer.addEventListener('pause', () => {
+            console.log('Audio pause event');
+            bgContainer.classList.remove('playing');
+            updatePlayPauseButton();
+        });
+
+        audioPlayer.addEventListener('ended', () => {
+            console.log('Audio ended');
+            bgContainer.classList.remove('playing');
+            updatePlayPauseButton();
+            
+            // Auto-play next track if autoplay is enabled
+            if (isAutoplayOn) {
+                nextTrack();
+            }
+        });
+
+        audioPlayer.addEventListener('error', (e) => {
+            console.error('Audio error:', audioPlayer.error);
+            bgContainer.classList.remove('playing');
+        });
+
+        // Play first track (when clicking album art)
+        function playFirstTrack() {
+            if (audioPlayer.paused || audioPlayer.ended || !audioPlayer.src) {
+                playTrack(0);
+            }
+        }
+
+        // Text-to-Speech for accessibility
+        function speakWarning() {
+            if ('speechSynthesis' in window) {
+                const warningText = `
+                    Content Warning. 
+                    This experience contains: 
+                    Flashing lights, strobing effects, and rapid visual changes. 
+                    Explicit language and mature themes. 
+                    Topics of violence and intense emotional content. 
+                    Topics of self-harm and mental health struggles. 
+                    Parental guidance is highly advised. 
+                    Viewer discretion is strongly advised. 
+                    If you or anyone in your vicinity has a history of epilepsy or photosensitive seizures, please exercise caution or refrain from viewing. 
+                    Crisis Support: If you or anyone you know is thinking of hurting themselves, please call the Suicide Prevention Hotline at 9 8 8. 
+                    Help is available 24/7. You are not alone. 
+                    By continuing, you acknowledge these warnings and proceed at your own risk.
+                `;
+                
+                const utterance = new SpeechSynthesisUtterance(warningText);
+                utterance.rate = 0.9; // Slightly slower for clarity
+                utterance.pitch = 1;
+                utterance.volume = 1;
+                
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Dismiss warning overlay
+        function dismissWarning() {
+            const overlay = document.getElementById('warning-overlay');
+            overlay.classList.add('hidden');
+            // Stop speech if still playing
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        // Auto-play warning on page load
+        window.addEventListener('load', () => {
+            setTimeout(() => speakWarning(), 500);
+        });
+
+        // Initialize
+        initPlaylist();
+        console.log('Player initialized with tracks:', tracks);
+    </script>
+</body>
+</html>
